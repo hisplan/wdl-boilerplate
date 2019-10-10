@@ -24,7 +24,7 @@ task Say {
     }
 }
 
-task Repeat {
+task SayToFile {
 
     input {
         String message
@@ -33,11 +33,11 @@ task Repeat {
     command {
         set -euo pipefail
 
-        echo "REPEAT: ~{message}"
+        echo "~{message}" > hello.txt
     }
 
     output {
-        String out = read_string(stdout())
+        File out = "hello.txt"
     }
 
     runtime {

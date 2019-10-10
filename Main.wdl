@@ -13,13 +13,13 @@ workflow Main {
             name = name
     }
 
-    call HelloWorld.Repeat {
+    call HelloWorld.SayToFile {
         input:
             message = Say.out
     }
 
     output {
-        String outSay = Say.out
-        String outRepeat = Repeat.out
+        String outString = Say.out
+        File outFile = SayToFile.out
     }
 }
