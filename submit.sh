@@ -30,4 +30,6 @@ cromwell-tools submit \
     --secrets-file ${service_account_key} \
     --wdl Main.wdl \
     --inputs-files Main.inputs.json \
-    --deps-file Main.deps.zip
+    --deps-file Main.deps.zip \
+    --label-file Main.labels.json \
+    --options-file Main.options.json
