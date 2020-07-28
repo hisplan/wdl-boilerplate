@@ -6,11 +6,11 @@ task Say {
         String name
     }
 
-    command {
+    command <<<
         set -euo pipefail
 
         echo "Hello, World! ~{name}"
-    }
+    >>>
 
     output {
         String out = read_string(stdout())
@@ -30,11 +30,11 @@ task SayToFile {
         String message
     }
 
-    command {
+    command <<<
         set -euo pipefail
 
         echo "~{message}" > hello.txt
-    }
+    >>>
 
     output {
         File out = "hello.txt"
