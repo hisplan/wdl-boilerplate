@@ -3,4 +3,4 @@
 java -jar ~/Applications/womtool.jar \
     validate \
     Main.wdl \
-    --inputs Main.inputs.json
+    --inputs ./configs/Main.inputs.json
