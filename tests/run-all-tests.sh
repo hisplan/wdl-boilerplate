@@ -25,9 +25,6 @@ then
     exit 1
 fi
 
-# zip dependency
-source ./zip-deps.sh
-
 for module_name in $modules
 do
 
