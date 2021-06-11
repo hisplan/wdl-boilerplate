@@ -12,9 +12,19 @@
 
 ## Hello World!
 
-The boilerplate comes with an example workflow called `HelloWorld`. Run this workflow first on your workflow system to verify your environment is ready.
+The boilerplate comes with an example workflow called `HelloWorld`. Let's run this workflow first on your workflow system to verify your environment is ready.
+
+Download the boilerplate and extract it to a new directory called `HelloWorld-wdl`:
 
 ```bash
+$ wget https://github.com/hisplan/wdl-boilerplate/archive/refs/tags/v0.0.7.tar.gz -O wdl-boilerplate.tar.gz
+$ mkdir -p HelloWorld-wdl && tar xvzf wdl-boilerplate.tar.gz -C HelloWorld-wdl --strip-components 1
+```
+
+Submit a job to your workflow system:
+
+```bash
+$ cd HelloWorld-wdl
 $ ./submit.sh \
     -k ~/keys/secrets-aws.json \
     -i ./configs/HelloWorld.inputs.json \
@@ -28,18 +38,12 @@ $ ./submit.sh \
 
 ```
 .
-├── HelloWorld.deps.zip
-├── HelloWorld.options.aws.json
-├── HelloWorld.options.gcp.json
-├── HelloWorld.wdl
-├── README.md
 ├── configs
 │   ├── HelloWorld.inputs.json
 │   ├── HelloWorld.labels.aws.json
 │   └── HelloWorld.labels.gcp.json
 ├── modules
 │   └── Greeter.wdl
-├── submit.sh
 ├── tests
 │   ├── run-all-tests.sh
 │   ├── run-test.sh
@@ -48,6 +52,13 @@ $ ./submit.sh \
 │   ├── test.labels.json
 │   ├── validate.sh
 │   └── zip-deps.sh
+├── HelloWorld.deps.zip
+├── HelloWorld.options.aws.json
+├── HelloWorld.options.gcp.json
+├── HelloWorld.wdl
+├── README.md
+├── init.sh
+├── submit.sh
 └── validate.sh
 ```
 
@@ -78,14 +89,25 @@ Before you do anything, it is recommended to change `HelloWorld` to something el
 
 These are the files to be updated:
 
-- `HelloWorld.wdl`
-- `submit.sh`
-- `validate.sh`
-- `./configs/HelloWorld.inputs.json`
-- `./configs/HelloWorld.labels.aws.json`
-- `./configs/HelloWorld.labels.gcp.json`
-- `./tests/run-test.sh`
+- `./validate.sh`
 - `./tests/zip-deps.sh`
+- `./tests/run-test.sh`
+- `./submit.sh`
+- `./HelloWorld.wdl`
+- `./configs/HelloWorld.labels.gcp.json`
+- `./configs/HelloWorld.labels.aws.json`
+- `./configs/HelloWorld.inputs.json`
+
+You should also change the file names as well (e.g. `HelloWorld.wdl` to `CellHashing.wdl`)
+
+You can also try the auto-rename tool (experimental):
+
+```bash
+$ ./init.sh -n CellHashing
+```
+
+Without the `-e` flag, it will run as a test (i.e. dry run)
+
 
 ## Testing
 
