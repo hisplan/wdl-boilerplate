@@ -3,7 +3,7 @@
 #hack: get dependency set up
 ln -s ../modules/ modules
 
-modules="HelloWorld"
+modules="Greeter"
 
 for module_name in $modules
 do

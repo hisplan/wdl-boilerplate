@@ -2,5 +2,5 @@
 
 java -jar ~/Applications/womtool.jar \
     validate \
-    Main.wdl \
-    --inputs ./configs/Main.inputs.json
+    HelloWorld.wdl \
+    --inputs ./configs/HelloWorld.inputs.json

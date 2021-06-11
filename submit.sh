@@ -29,13 +29,13 @@ then
     exit 1
 fi
 
-rm -rf Main.deps.zip
-zip Main.deps.zip modules modules/*
+rm -rf HelloWorld.deps.zip
+zip HelloWorld.deps.zip modules modules/*
 
 cromwell-tools submit \
     --secrets-file ${service_account_key} \
-    --wdl Main.wdl \
+    --wdl HelloWorld.wdl \
     --inputs-files ${inputs_file} \
-    --deps-file Main.deps.zip \
+    --deps-file HelloWorld.deps.zip \
     --label-file ${labels_file} \
     --options-file ${options_file}

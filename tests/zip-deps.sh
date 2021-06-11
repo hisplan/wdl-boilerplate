@@ -1,6 +1,6 @@
 #!/bin/bash
 
 cd ..
-rm -rf Main.deps.zip
-zip Main.deps.zip modules modules/*
+rm -rf HelloWorld.deps.zip
+zip HelloWorld.deps.zip modules modules/*
 cd -

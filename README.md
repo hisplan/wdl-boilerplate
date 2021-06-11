@@ -17,9 +17,9 @@ The boilerplate comes with an example workflow called `HelloWorld`. Run this wor
 ```bash
 $ ./submit.sh \
     -k ~/keys/secrets-aws.json \
-    -i ./configs/Main.inputs.json \
-    -l ./configs/Main.labels.aws.json \
-    -o Main.options.aws.json
+    -i ./configs/HelloWorld.inputs.json \
+    -l ./configs/HelloWorld.labels.aws.json \
+    -o HelloWorld.options.aws.json
 ```
 
 - `secrets-aws.json`: contains your credentials to access the workflow system.
@@ -28,23 +28,23 @@ $ ./submit.sh \
 
 ```
 .
-├── Main.deps.zip
-├── Main.options.aws.json
-├── Main.options.gcp.json
-├── Main.wdl
+├── HelloWorld.deps.zip
+├── HelloWorld.options.aws.json
+├── HelloWorld.options.gcp.json
+├── HelloWorld.wdl
 ├── README.md
 ├── configs
-│   ├── Main.inputs.json
-│   ├── Main.labels.aws.json
-│   └── Main.labels.gcp.json
+│   ├── HelloWorld.inputs.json
+│   ├── HelloWorld.labels.aws.json
+│   └── HelloWorld.labels.gcp.json
 ├── modules
-│   └── HelloWorld.wdl
+│   └── Greeter.wdl
 ├── submit.sh
 ├── tests
 │   ├── run-all-tests.sh
 │   ├── run-test.sh
-│   ├── test.HelloWorld.inputs.json
-│   ├── test.HelloWorld.wdl
+│   ├── test.Greeter.inputs.json
+│   ├── test.Greeter.wdl
 │   ├── test.labels.json
 │   ├── validate.sh
 │   └── zip-deps.sh
@@ -70,26 +70,26 @@ A directory where tests for subworkflows will be placed.
 
 ## Modular Design
 
-The boilerplate comes with the HelloWorld example which takes your name as input and outputs your name 1) as a string and 2) as a file. `Main.wdl` is the main workflow. `modules/HelloWorld.wdl` is the subworkflow.
+The boilerplate comes with the HelloWorld example which takes your name as input and outputs your name 1) as a string and 2) as a file. `HelloWorld.wdl` is the main workflow. `./modules/Greeter.wdl` is the subworkflow. You can add additional subworkflows under the `modules` directory and call them from your main workflow (e.g. `HelloWorld.wdl`).
 
 ## Your First Workflow
 
-Before you do anything, it is recommended to change `Main` to something else. For example, if you are building a Cell Hashing pipeline, you probably want to replace the name `Main` to `CellHashing`.
+Before you do anything, it is recommended to change `HelloWorld` to something else. For example, if you are building a Cell Hashing pipeline, you probably want to replace the name `HelloWorld` to `CellHashing`.
 
 These are the files to be updated:
 
-- `Main.wdl`
+- `HelloWorld.wdl`
 - `submit.sh`
 - `validate.sh`
-- `./configs/Main.inputs.json`
-- `./configs/Main.labels.aws.json`
-- `./configs/Main.labels.gcp.json`
+- `./configs/HelloWorld.inputs.json`
+- `./configs/HelloWorld.labels.aws.json`
+- `./configs/HelloWorld.labels.gcp.json`
 - `./tests/run-test.sh`
 - `./tests/zip-deps.sh`
 
 ## Testing
 
-Currently, it's not really designed for unit testing, rather this will allow you to verify if your WDL files are written syntactically right.
+Currently, this is not really designed for unit testing, rather this will allow you to verify if your WDL files are written syntactically right.
 
 ```bash
 $ cd tests
@@ -99,7 +99,7 @@ $ ./validate.sh
 If you have added new subworkflows, make sure to include them in `validate.sh` before running it:
 
 ```bash
-modules="MyNewSubWorkflow HelloWorld"
+modules="MyNewSubWorkflow Greeter"
 ```
 
 Also, another thing you can do is actually running your subworkflow(s) on the workflow system.
@@ -112,24 +112,24 @@ $ ./run-all-tests.sh -k ~/keys/secrets-aws.json
 Again, if you have added new subworkflows, make sure to include them in `run-all-tests.sh` before running it:
 
 ```bash
-modules="MyNewSubWorkflow HelloWorld"
+modules="MyNewSubWorkflow Greeter"
 ```
 
 You can also run an individual subworkflow separately:
 
 ```bash
 $ cd tests
-$ ./run-test.sh -k ~/keys/secrets-aws.json -m HelloWorld
+$ ./run-test.sh -k ~/keys/secrets-aws.json -m Greeter
 ```
 
 ## Known Issues
 
-The following three doesn't work currently (in `Main.options.*.json`)
+The following three doesn't work currently (in `HelloWorld.options.*.json`)
 
 ```json
 {
-    "final_workflow_outputs_dir": "s3://dp-lab-batch/cromwell-execution/_outputs/Main/results",
-    "final_workflow_log_dir": "s3://dp-lab-batch/cromwell-execution/_outputs/Main/workflow-logs",
-    "final_call_logs_dir": "s3://dp-lab-batch/cromwell-execution/_outputs/Main/call-logs"
+    "final_workflow_outputs_dir": "s3://dp-lab-batch/cromwell-execution/_outputs/HelloWorld/results",
+    "final_workflow_log_dir": "s3://dp-lab-batch/cromwell-execution/_outputs/HelloWorld/workflow-logs",
+    "final_call_logs_dir": "s3://dp-lab-batch/cromwell-execution/_outputs/HelloWorld/call-logs"
 }
 ```

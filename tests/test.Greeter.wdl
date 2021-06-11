@@ -1,19 +1,19 @@
 version 1.0
 
-import "modules/HelloWorld.wdl" as HelloWorld
+import "modules/Greeter.wdl" as Greeter
 
-workflow HelloWorld {
+workflow Greeter {
 
     input {
         String name = name
     }
 
-    call HelloWorld.Say {
+    call Greeter.Say {
         input:
             name = name
     }
 
-    call HelloWorld.SayToFile {
+    call Greeter.SayToFile {
         input:
             message = Say.out
     }
