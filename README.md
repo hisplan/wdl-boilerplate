@@ -17,15 +17,15 @@ The boilerplate comes with an example workflow called `HelloWorld`. Let's run th
 Download the boilerplate and extract it to a new directory called `HelloWorld-wdl`:
 
 ```bash
-$ wget https://github.com/hisplan/wdl-boilerplate/archive/refs/tags/v0.0.7.tar.gz -O wdl-boilerplate.tar.gz
-$ mkdir -p HelloWorld-wdl && tar xvzf wdl-boilerplate.tar.gz -C HelloWorld-wdl --strip-components 1
+wget https://github.com/hisplan/wdl-boilerplate/archive/refs/tags/v0.0.7.tar.gz -O wdl-boilerplate.tar.gz
+mkdir -p HelloWorld-wdl && tar xvzf wdl-boilerplate.tar.gz -C HelloWorld-wdl --strip-components 1
 ```
 
 Submit a job to your workflow system:
 
 ```bash
-$ cd HelloWorld-wdl
-$ ./submit.sh \
+cd HelloWorld-wdl
+./submit.sh \
     -k ~/keys/secrets-aws.json \
     -i ./configs/HelloWorld.inputs.json \
     -l ./configs/HelloWorld.labels.aws.json \
@@ -103,7 +103,7 @@ You should also change the file names as well (e.g. `HelloWorld.wdl` to `CellHas
 You can also try the auto-rename tool (experimental):
 
 ```bash
-$ ./init.sh -n CellHashing
+./init.sh -n CellHashing
 ```
 
 Without the `-e` flag, it will run as a test (i.e. dry run)
@@ -114,8 +114,8 @@ Without the `-e` flag, it will run as a test (i.e. dry run)
 Currently, this is not really designed for unit testing, rather this will allow you to verify if your WDL files are written syntactically right.
 
 ```bash
-$ cd tests
-$ ./validate.sh
+cd tests
+./validate.sh
 ```
 
 If you have added new subworkflows, make sure to include them in `validate.sh` before running it:
@@ -127,8 +127,8 @@ modules="MyNewSubWorkflow Greeter"
 Also, another thing you can do is actually running your subworkflow(s) on the workflow system.
 
 ```bash
-$ cd tests
-$ ./run-all-tests.sh -k ~/keys/secrets-aws.json
+cd tests
+./run-all-tests.sh -k ~/keys/secrets-aws.json
 ```
 
 Again, if you have added new subworkflows, make sure to include them in `run-all-tests.sh` before running it:
@@ -140,8 +140,8 @@ modules="MyNewSubWorkflow Greeter"
 You can also run an individual subworkflow separately:
 
 ```bash
-$ cd tests
-$ ./run-test.sh -k ~/keys/secrets-aws.json -m Greeter
+cd tests
+./run-test.sh -k ~/keys/secrets-aws.json -m Greeter
 ```
 
 ## Known Issues
