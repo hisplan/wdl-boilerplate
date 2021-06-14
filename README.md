@@ -76,7 +76,8 @@ A directory where tests for subworkflows will be placed.
 
 ## Naming Conventions
 
-- Use pascal case for the main workflow and subworkflow names and file names.
+- Use pascal case for the main workflow, subworkflow name, task name, and file name.
+- Use camel case for variables.
 - Add postfix `.inputs.json` and `.labels.json` for job configurations.
 
 ## Modular Design
