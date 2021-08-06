@@ -17,7 +17,7 @@ The boilerplate comes with an example workflow called `HelloWorld`. Let's run th
 Download the boilerplate and extract it to a new directory called `HelloWorld-wdl`:
 
 ```bash
-wget https://github.com/hisplan/wdl-boilerplate/archive/refs/tags/v0.0.8.tar.gz -O wdl-boilerplate.tar.gz
+wget https://github.com/hisplan/wdl-boilerplate/archive/refs/tags/v0.0.9.tar.gz -O wdl-boilerplate.tar.gz
 mkdir -p HelloWorld-wdl && tar xvzf wdl-boilerplate.tar.gz -C HelloWorld-wdl --strip-components 1
 ```
 
