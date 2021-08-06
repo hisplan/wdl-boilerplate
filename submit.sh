@@ -29,9 +29,6 @@ then
     exit 1
 fi
 
-rm -rf HelloWorld.deps.zip
-zip HelloWorld.deps.zip modules modules/*
-
 cromwell-tools submit \
     --secrets-file ${service_account_key} \
     --wdl HelloWorld.wdl \
