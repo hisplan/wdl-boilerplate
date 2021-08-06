@@ -3,13 +3,13 @@
 wf_name="HelloWorld"
 version="0.0.1"
 files="submit.sh HelloWorld.deps.zip HelloWorld.wdl HelloWorld.options.aws.json HelloWorld.options.aws.json"
-dest="$HOME/sing/bin"
+dest="$HOME/scing/bin"
 
 usage()
 {
 cat << EOF
 USAGE: `basename $0` [options]
-    -d  destination (e.g. $HOME/sing/bin/)
+    -d  destination (e.g. $HOME/scing/bin/)
     -s  AWS S3 destination; no trailing slash (e.g. s3://dp-lab-home/software)
 EOF
 }
