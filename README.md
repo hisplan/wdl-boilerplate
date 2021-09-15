@@ -6,6 +6,7 @@
 1. Structure
 1. Naming Conventions
 1. Modular Design
+1. Development Steps
 1. Your First Workflow
 1. Testing
 1. Known Issues
@@ -14,25 +15,59 @@
 
 The boilerplate comes with an example workflow called `HelloWorld`. Let's run this workflow first on your workflow system to verify your environment is ready.
 
-Download the boilerplate and extract it to a new directory called `HelloWorld-wdl`:
+Download the boilerplate and extract it to a new directory called `wdl-HelloWorld`:
 
 ```bash
-wget https://github.com/hisplan/wdl-boilerplate/archive/refs/tags/v0.0.9.tar.gz -O wdl-boilerplate.tar.gz
-mkdir -p HelloWorld-wdl && tar xvzf wdl-boilerplate.tar.gz -C HelloWorld-wdl --strip-components 1
+wget https://github.com/hisplan/wdl-boilerplate/archive/refs/tags/v0.0.11.tar.gz -O wdl-boilerplate.tar.gz
+mkdir -p wdl-HelloWorld && tar xvzf wdl-boilerplate.tar.gz -C wdl-HelloWorld --strip-components 1
 ```
 
-Submit a job to your workflow system:
+```bash
+cd wdl-HelloWorld
+```
+
+Open `configs/HelloWorld.inputs.json` and change the `HelloWorld.name` value to your real name (e.g. `Jaeyoung`):
+
+```json
+{
+    "HelloWorld.name": "Jaeyoung"
+}
+```
+
+Open `configs/HelloWorld.labels.aws.json` and change the `destination` value to `s3://dp-lab-gwf-core/outputs/HelloWorld/$NAME` where `$NAME` should be replaced with your real name (e.g. `Jaeyoung`):
+
+```
+{
+    "pipelineType": "HelloWorld",
+    "project": "Test",
+    "sample": "Test",
+    "owner": "chunj",
+    "destination": "s3://dp-lab-gwf-core/outputs/HelloWorld/Jaeyoung/",
+    "transfer": "-",
+    "comment": ""
+}
+```
+
+Create a conda environment and install Cromwell and Java Runtime:
+
+```
+conda create -n cromwell python=3.8 pip
+conda activate cromwell
+conda install -c cyclus java-jre
+pip install cromwell-tools==2.4.1
+```
+
+Submit a HelloWorld job to the workflow system:
 
 ```bash
-cd HelloWorld-wdl
 ./submit.sh \
-    -k ~/keys/secrets-aws.json \
+    -k ~/keys/cromwell-secrets.json \
     -i ./configs/HelloWorld.inputs.json \
     -l ./configs/HelloWorld.labels.aws.json \
     -o HelloWorld.options.aws.json
 ```
 
-- `secrets-aws.json`: contains your credentials to access the workflow system.
+- `cromwell-secrets.json`: contains your credentials to access the workflow system.
 
 ## Structure
 
@@ -41,7 +76,9 @@ cd HelloWorld-wdl
 ├── configs
 │   ├── HelloWorld.inputs.json
 │   ├── HelloWorld.labels.aws.json
-│   └── HelloWorld.labels.gcp.json
+│   ├── HelloWorld.labels.gcp.json
+│   ├── template.inpus.json
+│   └── template.labels.json
 ├── modules
 │   └── Greeter.wdl
 ├── tests
@@ -58,6 +95,7 @@ cd HelloWorld-wdl
 ├── HelloWorld.wdl
 ├── README.md
 ├── init.sh
+├── make-deployable.sh
 ├── submit.sh
 └── validate.sh
 ```
@@ -84,9 +122,22 @@ A directory where tests for subworkflows will be placed.
 
 The boilerplate comes with the HelloWorld example which takes your name as input and outputs your name 1) as a string and 2) as a file. `HelloWorld.wdl` is the main workflow. `./modules/Greeter.wdl` is the subworkflow. You can add additional subworkflows under the `modules` directory and call them from your main workflow (e.g. `HelloWorld.wdl`).
 
+When you finish writing your subworkflows, you must run `tests/zip-deps.sh` which packages all your subworkflows into a single deployable file.
+
+## Development Steps
+
+1. Write subworkflows (under the `modules` directory)
+1. Create a test workflow (under the `tests` directory)
+1. Validate each subworkflow (`tests/validate.sh`)
+1. Test each subworkflow (`tests/run-test.sh`)
+1. Package subworkflows into a deployable file (`tests/zip-deps.sh`)
+1. Write the main workflow.
+1. Validate the main workflow.
+1. Create a job input/label file (under the `configs` directory)
+
 ## Your First Workflow
 
-Before you do anything, it is recommended to change `HelloWorld` to something else. For example, if you are building a Cell Hashing pipeline, you probably want to replace the name `HelloWorld` to `CellHashing`.
+Before you do anything, you should change `HelloWorld` to something else. For example, if you are building a Cell Hashing pipeline, you probably want to replace the name `HelloWorld` to `CellHashing`.
 
 These are the files to be updated:
 
@@ -101,7 +152,7 @@ These are the files to be updated:
 
 You should also change the file names as well (e.g. `HelloWorld.wdl` to `CellHashing.wdl`)
 
-You can also try the auto-rename tool (experimental):
+Renaming will be a tedious thing to do, so you can try the auto-rename tool (experimental):
 
 ```bash
 ./init.sh -n CellHashing
@@ -109,10 +160,9 @@ You can also try the auto-rename tool (experimental):
 
 Without the `-e` flag, it will run as a test (i.e. dry run)
 
-
 ## Testing
 
-Currently, this is not really designed for unit testing, rather this will allow you to verify if your WDL files are written syntactically right.
+Currently, this is not really designed for unit testing, rather this will allow you to verify if your WDL files are written syntactically and semantically right.
 
 ```bash
 cd tests
@@ -125,11 +175,11 @@ If you have added new subworkflows, make sure to include them in `validate.sh` b
 modules="MyNewSubWorkflow Greeter"
 ```
 
-Also, another thing you can do is actually running your subworkflow(s) on the workflow system.
+Also, another thing you can do is running your subworkflow(s) on the workflow system.
 
 ```bash
 cd tests
-./run-all-tests.sh -k ~/keys/secrets-aws.json
+./run-all-tests.sh -k ~/keys/cromwell-secrets.json
 ```
 
 Again, if you have added new subworkflows, make sure to include them in `run-all-tests.sh` before running it:
@@ -142,7 +192,7 @@ You can also run an individual subworkflow separately:
 
 ```bash
 cd tests
-./run-test.sh -k ~/keys/secrets-aws.json -m Greeter
+./run-test.sh -k ~/keys/cromwell-secrets.json -m Greeter
 ```
 
 ## Known Issues
