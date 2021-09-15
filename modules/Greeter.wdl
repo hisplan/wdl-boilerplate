@@ -9,7 +9,7 @@ task Say {
     command <<<
         set -euo pipefail
 
-        echo "Hello, World! ~{name}"
+        echo "Hello, ~{name}!"
     >>>
 
     output {
@@ -17,8 +17,8 @@ task Say {
     }
 
     runtime {
-        docker: "ubuntu:18.04"
-        disks: "local-disk 100 HDD"
+        docker: "ubuntu:20.04"
+        disks: "local-disk 2 HDD"
         cpu: 1
         memory: "1 GB"
     }
@@ -41,8 +41,8 @@ task SayToFile {
     }
 
     runtime {
-        docker: "ubuntu:18.04"
-        disks: "local-disk 100 HDD"
+        docker: "ubuntu:20.04"
+        disks: "local-disk 2 HDD"
         cpu: 1
         memory: "1 GB"
     }

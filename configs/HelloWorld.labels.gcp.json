@@ -1,9 +1,9 @@
 {
-    "pipelineType": "Test",
-    "project": "Project 123",
-    "sample": "S316",
+    "pipelineType": "HelloWorld",
+    "project": "Test",
+    "sample": "Test",
     "owner": "chunj",
-    "destination": "gs://chunj-cromwell/outputs/HelloWorld",
+    "destination": "gs://dp-lab-wf/outputs/HelloWorld/",
     "transfer": "-",
-    "comment": "Cromwell+WDL Boilerplate"
+    "comment": ""
 }
