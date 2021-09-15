@@ -48,7 +48,7 @@ Open `configs/HelloWorld.labels.aws.json` and change the `destination` value to 
 }
 ```
 
-Create a conda environment and install Cromwell and Java Runtime:
+Create a conda environment and install `cromwell-tools` and Java Runtime:
 
 ```
 conda create -n cromwell python=3.8 pip
@@ -67,7 +67,7 @@ Submit a HelloWorld job to the workflow system:
     -o HelloWorld.options.aws.json
 ```
 
-- `cromwell-secrets.json`: contains your credentials to access the workflow system.
+where `cromwell-secrets.json` is your secrets file (also called service account key) that contains your credentials and allows you to access the workflow system.
 
 ## Structure
 
@@ -100,22 +100,19 @@ Submit a HelloWorld job to the workflow system:
 └── validate.sh
 ```
 
-### `configs`
-
-A directory where job configurations will be placed.
-
-### `modules`
-
-A directory where subworkflows will be placed.
-
-### `tests`
-
-A directory where tests for subworkflows will be placed.
+File/Directory         | Description
+---------------------- | -------------------------------------------------------------
+`configs`              | Directory where job configurations should be placed
+`modules`              | Directory where subworkflows should be placed
+`tests`                | Directory where tests for subworkflows should be placed
+`HelloWorld.wdl`       | Main workflow
+`HelloWorld.deps.zip`  | Packaged/compressed subworkflows (`modules/*`)
+`submit.sh`            | Script for submitting a job to the workflow system
 
 ## Naming Conventions
 
-- Use pascal case for the main workflow, subworkflow name, task name, and file name.
-- Use camel case for variables.
+- Use pascal case for the main workflow, subworkflow name, task name, and file name (e.g. `HelloWorld`).
+- Use camel case for variables (e.g. `helloWorld`).
 - Add postfix `.inputs.json` and `.labels.json` for job configurations.
 
 ## Modular Design
@@ -127,9 +124,9 @@ When you finish writing your subworkflows, you must run `tests/zip-deps.sh` whic
 ## Development Steps
 
 1. Write subworkflows (under the `modules` directory)
-1. Create a test workflow (under the `tests` directory)
+1. Create a test workflow that can test your subworkflows (under the `tests` directory)
 1. Validate each subworkflow (`tests/validate.sh`)
-1. Test each subworkflow (`tests/run-test.sh`)
+1. Test each subworkflow by actually running them on the workflow system (`tests/run-test.sh`)
 1. Package subworkflows into a deployable file (`tests/zip-deps.sh`)
 1. Write the main workflow.
 1. Validate the main workflow.
@@ -152,7 +149,7 @@ These are the files to be updated:
 
 You should also change the file names as well (e.g. `HelloWorld.wdl` to `CellHashing.wdl`)
 
-Renaming will be a tedious thing to do, so you can try the auto-rename tool (experimental):
+Renaming will be a tedious thing to do, so you can try out the auto-rename tool (experimental):
 
 ```bash
 ./init.sh -n CellHashing
@@ -162,7 +159,7 @@ Without the `-e` flag, it will run as a test (i.e. dry run)
 
 ## Testing
 
-Currently, this is not really designed for unit testing, rather this will allow you to verify if your WDL files are written syntactically and semantically right.
+Currently, this is not really designed for unit testing (TBD), rather this will allow you to verify if your WDL files are written syntactically and semantically right.
 
 ```bash
 cd tests
