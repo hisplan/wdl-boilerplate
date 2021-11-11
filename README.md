@@ -11,6 +11,12 @@
 1. Testing
 1. Known Issues
 
+## Setup
+
+The boilerplate is a part of SCING (Single-Cell pIpeliNe Garden; pronounced as "sing" /siŋ/). For setup, please refer to [this page](https://github.com/hisplan/scing). All the instructions below is given under the assumption that you have already configured SCING + JRE or JDK in your environment.
+
+However, with small changes in the instructions and code, you should be able to use this boilerplate for any Cromwell/WDL-based workflow system.
+
 ## Hello World!
 
 The boilerplate comes with an example workflow called `HelloWorld`. Let's run this workflow first on your workflow system to verify your environment is ready.
@@ -18,7 +24,7 @@ The boilerplate comes with an example workflow called `HelloWorld`. Let's run th
 Download the boilerplate and extract it to a new directory called `wdl-HelloWorld`:
 
 ```bash
-wget https://github.com/hisplan/wdl-boilerplate/archive/refs/tags/v0.0.11.tar.gz -O wdl-boilerplate.tar.gz
+wget https://github.com/hisplan/wdl-boilerplate/archive/refs/tags/v0.0.12.tar.gz -O wdl-boilerplate.tar.gz
 mkdir -p wdl-HelloWorld && tar xvzf wdl-boilerplate.tar.gz -C wdl-HelloWorld --strip-components 1
 ```
 
@@ -48,13 +54,10 @@ Open `configs/HelloWorld.labels.aws.json` and change the `destination` value to 
 }
 ```
 
-Create a conda environment and install `cromwell-tools` and Java Runtime:
+Activate the `scing` conda environment:
 
 ```
-conda create -n cromwell python=3.8 pip
-conda activate cromwell
-conda install -c cyclus java-jre
-pip install cromwell-tools==2.4.1
+conda activate scing
 ```
 
 Submit a HelloWorld job to the workflow system:
@@ -67,7 +70,7 @@ Submit a HelloWorld job to the workflow system:
     -o HelloWorld.options.aws.json
 ```
 
-where `cromwell-secrets.json` is your secrets file (also called service account key) that contains your credentials and allows you to access the workflow system.
+where `cromwell-secrets.json` is your secrets file that contains your credentials and server address.
 
 ## Structure
 
